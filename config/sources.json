@@ -1,0 +1,9 @@
+{
+    "selector": ".x-pdp-availability-online.onlineAvailabilityContainer_Z02qk > div > div > span:nth-child(2)",
+    "soldOutText": "Sold out online",
+    "urls": [
+        "https://www.bestbuy.ca/en-ca/product/14457223",
+        "https://www.bestbuy.ca/en-ca/product/nintendo-switch-lite-turquoise/13807348"
+
+    ]
+}

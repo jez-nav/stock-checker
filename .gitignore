@@ -1,0 +1,21 @@
+###############
+# Directories #
+###############
+node_modules/
+.idea/
+.vscode/
+archive*/
+###############
+# Files       #
+###############
+*.zip
+*.html
+package-lock.json
+######################
+# OS generated files #
+######################
+.DS_Store
+ehthumbs.db
+Icon?
+Thumbs.db
+*.orig
