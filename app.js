@@ -2,38 +2,55 @@ const puppeteer = require('puppeteer'),
     fs = require('fs');
 
 
-
-
 const source = JSON.parse(fs.readFileSync('config/sources.json', 'utf8'));
 
-const url = 'https://www.bestbuy.ca/en-ca/product/nintendo-switch-lite-coral/14457223'
-const selector = '.x-pdp-availability-online.onlineAvailabilityContainer_Z02qk > div > div > span:nth-child(2)'
-const soldOutText = 'Sold out online'
+const State = Object.freeze({
+    AVAILABLE: Symbol("Available"),
+    BACKORDER: Symbol("Backorder"),
+    SOLDOUT: Symbol("Sold Out"),
+    CHECKING: Symbol("Checking"),
+    ERROR: Symbol("Error"),
+    UNKNOWN: Symbol("Unknown")
+});
 
-
+/*  Assigning Enums
+const obj = { id: "id", status: State.AVAILABLE}
+if (obj.status === State.AVAILABLE) { console.log("match")} else { console.log("not match")}
+*/
 
 async function init_worker(source) {
-    const browser = await puppeteer.launch({ headless: true });
-    const page = await browser.newPage();
-    urls = source.urls
+    const browser = await puppeteer.launch({ headless: false });
+    const context = browser.defaultBrowserContext();
+    await context.overridePermissions("https://www.bestbuy.ca", ['geolocation']);
 
 
-    for (const url of urls) {
+    for (const site of source) {
+        urls = site.urls;
+        for (const url of urls) {
+            const page = await browser.newPage();
+            await page.setGeolocation({ latitude: 43.5807955, longitude: -79.7590747 })
+            try {
+                console.log(url)
+                await page.setViewport({ width: 1366, height: 768 });
+                await page.goto(url, { waitUntil: 'networkidle0' });
+                await page.waitForSelector(source.selector)
+                const result = await page.$eval(source.selector, e => e.innerText)
 
-        try {
-            console.log(url)
-            await page.goto(url, { waitUntil: 'load' });
-            const result = await page.$eval(source.selector, e => e.innerText)
-            if (result != soldOutText) {
-                console.log('AVAILABLE')
-            } else { console.log('SOLD OUT') }
+                if (result != source.soldOutText) {
+                    console.log('AVAILABLE')
+                } else { console.log('SOLD OUT') }
 
-        } catch {
-            console.error(err);
-            await browser.close();
-            throw new Error('page.goto/waitForSelector timed out.');
+                await page.close()
+            } catch (err) {
+                console.error(err);
+                await browser.close();
+                throw new Error('page.goto/waitForSelector timed out.');
+            }
         }
     }
+
+
+
 
     await browser.close();
 }
@@ -55,7 +72,7 @@ async function check_stock(url, selector, soldOutValue) {
             console.log('AVAILABLE')
         } else { console.log('SOLD OUT') }
 
-    } catch {
+    } catch (err) {
 
         console.error(err);
         await browser.close();

@@ -1,9 +1,23 @@
-{
-    "selector": ".x-pdp-availability-online.onlineAvailabilityContainer_Z02qk > div > div > span:nth-child(2)",
-    "soldOutText": "Sold out online",
-    "urls": [
-        "https://www.bestbuy.ca/en-ca/product/14457223",
-        "https://www.bestbuy.ca/en-ca/product/nintendo-switch-lite-turquoise/13807348"
+[{
 
-    ]
-}
+        "selector": "button.addToCartButton:nth-child(2) > span:nth-child(1) > div > span",
+        "soldOutText": "Add to Cart",
+        "urls": [
+            "https://www.bestbuy.ca/en-ca/product/playstation-5-console/14962185",
+            "https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console/14962184",
+            "https://www.bestbuy.ca/en-ca/product/spider-man-miles-morales-launch-edition-ps5/14962272"
+
+        ]
+    },
+    {
+
+        "selector": "button.addToCartButton:nth-child(2) > span:nth-child(1) > div > span",
+        "soldOutText": "Add to Cart",
+        "urls": [
+            "https://www.bestbuy.ca/en-ca/product/playstation-5-console/14962185",
+            "https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console/14962184",
+            "https://www.bestbuy.ca/en-ca/product/spider-man-miles-morales-launch-edition-ps5/14962272"
+
+        ]
+    }
+]
