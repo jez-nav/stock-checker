@@ -9,6 +9,9 @@
   "author": "jez-nav",
   "license": "ISC",
   "dependencies": {
+    "gulp": "^4.0.2",
+    "line-notify-nodejs": "^1.0.0",
+    "messaging-api-line": "^1.0.1",
     "puppeteer": "^3.0.0"
   }
 }

@@ -1,5 +1,5 @@
 [{
-
+        "siteName": "Best Buy",
         "selector": "button.addToCartButton:nth-child(2) > span:nth-child(1) > div > span",
         "soldOutText": "Add to Cart",
         "urls": [
@@ -10,13 +10,11 @@
         ]
     },
     {
-
-        "selector": "button.addToCartButton:nth-child(2) > span:nth-child(1) > div > span",
-        "soldOutText": "Add to Cart",
+        "siteName": "NVIDIA",
+        "selector": "#tophero>div>div>div>div.page-section-par>div.button>div>div>div>div.cta>a.btn-cart>div",
+        "soldOutText": "Out Of Stock",
         "urls": [
-            "https://www.bestbuy.ca/en-ca/product/playstation-5-console/14962185",
-            "https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console/14962184",
-            "https://www.bestbuy.ca/en-ca/product/spider-man-miles-morales-launch-edition-ps5/14962272"
+            "https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/"
 
         ]
     }
