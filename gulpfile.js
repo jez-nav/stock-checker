@@ -1,8 +1,8 @@
 const gulp = require('gulp'),
     puppeteer = require('puppeteer'),
+    CronJob = require('cron').CronJob,
     fs = require('fs'),
     lineNotify = require('line-notify-nodejs')('k1HyFePVyikdt0UtT14VQmfthZeKui34lplM1dIINuE');
-
 
 
 const source = JSON.parse(fs.readFileSync('config/sources.json', 'utf8'));
@@ -19,7 +19,7 @@ const State = Object.freeze({
 });
 
 async function init_worker(source) {
-    const browser = await puppeteer.launch({ headless: false });
+    const browser = await puppeteer.launch({ headless: true });
     const context = browser.defaultBrowserContext();
     await context.overridePermissions("https://www.bestbuy.ca", ['geolocation']);
 
@@ -28,7 +28,7 @@ async function init_worker(source) {
         const page = await browser.newPage();
         await page.setGeolocation({ latitude: 43.5807955, longitude: -79.7590747 })
         try {
-            console.log(url)
+            //console.log(url)
             await page.setViewport({ width: 1366, height: 768 });
             await page.goto(url, { waitUntil: 'load' });
             await page.waitForSelector(source.selector)
@@ -40,10 +40,10 @@ async function init_worker(source) {
                 lineNotify.notify({
                     message: msg
                 }).then(() => {
-                    console.log('send completed!');
+                    console.log('Notify sent!');
                 });
 
-            } else { console.log('SOLD OUT') }
+            } else { console.log('SOLD OUT at ' + source.siteName + " || " + url) }
 
             await page.close()
         } catch (err) {
@@ -60,7 +60,7 @@ async function init_worker(source) {
 
 
 async function check_stock(url, selector, soldOutValue) {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const page = await browser.newPage();
 
     try {
@@ -90,9 +90,12 @@ async function check_stock(url, selector, soldOutValue) {
 
 function checkAll() {
 
-
-    init_worker(source[0])
-    return init_worker(source[1]);
+    return init_worker(source[0]);
+/*    for (const site of source) {
+        init_worker(site)
+    }
+    return;
+ */
 }
 
 function testNotify() {
@@ -102,6 +105,14 @@ function testNotify() {
         console.log('send completed!');
     });
 }
+
+const job = new CronJob('* 6-23 * * *', function() {
+    console.log(new Date());
+    console.log('Starting job');
+    checkAll();
+}, null, true, 'America/Toronto')
+
+job.start();
 
 gulp.task('checkAll', gulp.series(checkAll));
 gulp.task('testNotify', gulp.series(testNotify));

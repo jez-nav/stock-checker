@@ -4,9 +4,7 @@
         "soldOutText": "Add to Cart",
         "urls": [
             "https://www.bestbuy.ca/en-ca/product/playstation-5-console/14962185",
-            "https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console/14962184",
-            "https://www.bestbuy.ca/en-ca/product/spider-man-miles-morales-launch-edition-ps5/14962272"
-
+            "https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console/14962184"
         ]
     },
     {
@@ -17,5 +15,16 @@
             "https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/"
 
         ]
+    },
+    {
+    "siteName": "Amazon",
+    "selector": "#availability > span",
+    "soldOutText": "Currently unavailable.",
+        "urls": [
+            "https://www.amazon.ca/Playstation-3005720-PlayStation-5-Console/dp/B08GSC5D9G/",
+            "https://www.amazon.ca/Playstation-3005721-PlayStation-Digital-Edition/dp/B08GS1N24H"
+
+        ]
     }
+    
 ]

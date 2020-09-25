@@ -9,6 +9,7 @@
   "author": "jez-nav",
   "license": "ISC",
   "dependencies": {
+    "cron": "^1.8.2",
     "gulp": "^4.0.2",
     "line-notify-nodejs": "^1.0.0",
     "messaging-api-line": "^1.0.1",
