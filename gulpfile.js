@@ -19,7 +19,7 @@ const State = Object.freeze({
 });
 
 async function init_worker(source) {
-    const browser = await puppeteer.launch({ headless: true });
+    const browser = await puppeteer.launch({ headless: false });
     const context = browser.defaultBrowserContext();
     await context.overridePermissions("https://www.bestbuy.ca", ['geolocation']);
 
@@ -29,14 +29,16 @@ async function init_worker(source) {
         await page.setGeolocation({ latitude: 43.5807955, longitude: -79.7590747 })
         try {
             //console.log(url)
-            await page.setViewport({ width: 1366, height: 768 });
+            await page.setViewport({ width: 1920, height: 768 });
             await page.goto(url, { waitUntil: 'load' });
             await page.waitForSelector(source.selector)
             const result = await page.$eval(source.selector, e => e.innerText)
 
             if (result != source.soldOutText) {
-                console.log('AVAILABLE!!!')
                 msg = source.siteName + " is AVAILABLE: " + url;
+                console.log('AVAILABLE!!!')
+                console.log(msg)
+           
                 lineNotify.notify({
                     message: msg
                 }).then(() => {
@@ -56,46 +58,10 @@ async function init_worker(source) {
     await browser.close();
 }
 
-
-
-
-async function check_stock(url, selector, soldOutValue) {
-    const browser = await puppeteer.launch({ headless: false });
-    const page = await browser.newPage();
-
-    try {
-        await page.goto(url, { waitUntil: 'load' });
-        await page.waitForSelector(selector);
-        const result = await page.$eval(selector, e => e.innerText)
-
-
-        if (result != soldOutText) {
-            console.log('AVAILABLE')
-        } else { console.log('SOLD OUT') }
-
-    } catch (err) {
-
-        console.error(err);
-        await browser.close();
-        throw new Error('page.goto/waitForSelector timed out.');
-
-
+async function checkAll() {
+    for (const site of source) {
+        await init_worker(site)
     }
-
-    await browser.close();
-}
-
-
-
-
-function checkAll() {
-
-    return init_worker(source[0]);
-/*    for (const site of source) {
-        init_worker(site)
-    }
-    return;
- */
 }
 
 function testNotify() {
@@ -108,7 +74,7 @@ function testNotify() {
 
 const job = new CronJob('* 6-23 * * *', function() {
     console.log(new Date());
-    console.log('Starting job');
+    console.log('Starting job...');
     checkAll();
 }, null, true, 'America/Toronto')
 
