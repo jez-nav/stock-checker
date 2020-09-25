@@ -6,6 +6,7 @@ const gulp = require('gulp'),
 
 
 const source = JSON.parse(fs.readFileSync('config/sources.json', 'utf8'));
+const player = require('play-sound')(opts = {})
 
 //const source = JSON.parse(fs.readFileSync('config/sources.json', 'utf8'));
 
@@ -38,7 +39,9 @@ async function init_worker(source) {
                 msg = source.siteName + " is AVAILABLE: " + url;
                 console.log('AVAILABLE!!!')
                 console.log(msg)
-           
+                player.play('alarm.mp3', function(err) {
+                    if (err) throw err
+                })
                 lineNotify.notify({
                     message: msg
                 }).then(() => {

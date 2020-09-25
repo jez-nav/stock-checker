@@ -1,18 +1,18 @@
 {
-  "name": "stock-checker",
-  "version": "1.0.0",
-  "description": "Stock Checker",
-  "main": "index.js",
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "author": "jez-nav",
-  "license": "ISC",
-  "dependencies": {
-    "cron": "^1.8.2",
-    "gulp": "^4.0.2",
-    "line-notify-nodejs": "^1.0.0",
-    "messaging-api-line": "^1.0.1",
-    "puppeteer": "^3.0.0"
-  }
+    "name": "stock-checker",
+    "version": "1.0.0",
+    "description": "Stock Checker",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1"
+    },
+    "author": "jez-nav",
+    "license": "ISC",
+    "dependencies": {
+        "cron": "^1.8.2",
+        "gulp": "^4.0.2",
+        "line-notify-nodejs": "^1.0.0",
+        "play-sound": "^1.1.3",
+        "puppeteer": "^3.0.0"
+    }
 }
