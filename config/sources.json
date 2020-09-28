@@ -1,30 +1,10 @@
 [{
-        "siteName": "Best Buy",
-        "selector": "button.addToCartButton:nth-child(2) > span:nth-child(1) > div > span",
-        "soldOutText": "Add to Cart",
-        "urls": [
-            "https://www.bestbuy.ca/en-ca/product/playstation-5-console/14962185",
-            "https://www.bestbuy.ca/en-ca/product/playstation-5-digital-edition-console/14962184"
-        ]
-    },
-    {
         "siteName": "NVIDIA",
-        "selector": "#tophero>div>div>div>div.page-section-par>div.button>div>div>div>div.cta>a.btn-cart>div",
+        "selector": "div.sectionenhanced:nth-child(4) > section:nth-child(1)>div>div>div>div.page-section-par>div.button>div>div>div>div.cta>a.btn-cart>div",
         "soldOutText": "Out Of Stock",
         "urls": [
             "https://www.nvidia.com/en-us/geforce/graphics-cards/30-series/rtx-3080/"
-
-        ]
-    },
-    {
-    "siteName": "Amazon",
-    "selector": "#availability > span",
-    "soldOutText": "Currently unavailable.",
-        "urls": [
-            "https://www.amazon.ca/Playstation-3005720-PlayStation-5-Console/dp/B08GSC5D9G/",
-            "https://www.amazon.ca/Playstation-3005721-PlayStation-Digital-Edition/dp/B08GS1N24H"
-
         ]
     }
-    
+
 ]
