@@ -106,9 +106,46 @@ function checkNvidia(productID) {
             } else {
                 console.log('Out of Stock')
             }
-        }).catch(err => console.error("Could not fetch productID" + err));
+        }).catch(err => {
+            console.error("Could not fetch productID " + err);
+            checkNvidiaStage(productID)
+        });
 
 }
+
+function checkNvidiaStage(productID) {
+    const url = "https://api-stage.nvidia.com/direct-sales-shop/DR/products/en_us/USD/" + productID;
+    const settings = { method: "Get" }
+
+    return fetch(url, settings)
+        .then(res => res.json())
+        .then((json) => {
+            const name = json.products.product[0].name;
+            const status = json.products.product[0].inventoryStatus.status;
+            console.log("NVIDIA - Checking " + name)
+            if (status != "PRODUCT_INVENTORY_OUT_OF_STOCK" || status == "PRODUCT_INVENTORY_IN_STOCK") {
+                msg = name + " is AVAILABLE:";
+                console.log(msg)
+                player.play('alarm.mp3', function(err) {
+                    if (err) throw err
+                })
+                lineNotify.notify({
+                    message: msg
+                }).then(() => {
+                    console.log('Notify sent!');
+                });
+
+            } else if (status == "" || status == null || typeof(status) == "undefined") {
+                console.log('Cannot check status')
+            } else {
+                console.log('Out of Stock')
+            }
+        }).catch(err => {
+            console.error("Could not fetch productID " + err);
+        });
+
+}
+
 
 
 function checkBestBuy(productID) {
@@ -143,7 +180,7 @@ function checkBestBuy(productID) {
             } else {
                 console.log('Out of Stock')
             }
-        }).catch(err => console.error("Could not fetch productID" + err));
+        }).catch(err => console.error("Could not fetch productID " + err));
 
 }
 
